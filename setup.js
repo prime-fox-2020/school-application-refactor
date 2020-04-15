@@ -7,7 +7,7 @@ let query = `
     last_name VARCHAR(20) NOT NULL,
     gender VARCHAR(6) NOT NULL,
     email VARCHAR(50) NOT NULL,
-    birth_date VARCHAR(50) NOT NULL
+    birth_date DATE NOT NULL
   )
 `
 pool.query(query, err => {

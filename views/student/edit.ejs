@@ -5,48 +5,43 @@
     <form class="col s12" action="/students/<%= data.id %>/edit" method="post">
       <div class="row">
         <div class="input-field col s12">
-          <input id="first_name" name="first_name" type="text" class="validate" value="<%= data.first_name %>"
-            autofocus>
+          <i class="material-icons prefix">person</i>
+          <input id="first_name" name="first_name" type="text" class="validate" value="<%= data.first_name %>" autofocus required>
           <label for="first_name">First Name</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <input id="last_name" name="last_name" type="text" class="validate" value="<%= data.last_name %>">
+          <i class="material-icons prefix"></i>
+          <input id="last_name" name="last_name" type="text" class="validate" value="<%= data.last_name %>" required>
           <label for="last_name">Last Name</label>
         </div>
       </div>
-      <p style="color: #9e9e9e;">Gender</p>
-      <p>
-        <label>
-          <% if (data.gender === 'male') { %>
-          <input name="gender" value="male" type="radio" class="with-gap" checked />
-          <% } else { %>
-          <input name="gender" value="male" type="radio" class="with-gap" />
-          <% } %>
-          <span>Male</span>
-        </label>
-      </p>
-      <p>
-        <label>
-          <% if (data.gender === 'female') { %>
-          <input name="gender" value="female" type="radio" class="with-gap" checked />
-          <% } else { %>
-          <input name="gender" value="female" type="radio" class="with-gap" />
-          <% } %>
-          <span>Female</span>
-        </label>
-      </p>
-      <p>
-        <div class="row">
-          <div class="input-field col s12">
-            <input id="email" name="email" type="email" class="validate" value="<%= data.email %>">
-            <label for="email">Email</label>
-          </div>
+      <i class="material-icons prefix"></i>
+      <label>Gender</label>
+      <select name="gender" class="browser-default" style="margin-left: 3rem; width: auto;">
+        <option value="" disabled>Choose your option</option>
+        <option value="male" <%= data.gender === 'male' ? 'selected' : '' %> >Male</option>
+        <option value="female" <%= data.gender === 'female' ? 'selected' : '' %> >Female</option>
+      </select>
+      <br /><br />
+      <div class="row">
+        <div class="input-field col s12">
+          <i class="material-icons prefix">date_range</i>
+          <input id="birth_date" name="birth_date" type="text" class="validate" value="<%= data.getBod() %>" required>
+          <!-- <input id="birth_date" name="birth_date" type="text" class="validate" value="" required> -->
+          <label for="birth_date">Birth of Date (DD-MM-YYYY)</label>
         </div>
-        <button type="submit" class="waves-effect waves-light btn"><i class="material-icons right">edit</i>Edit
-          Student</button>
-        <a href="/students" class="waves-effect waves-light btn right">Show All Students</a>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <i class="material-icons prefix">email</i>
+          <input id="email" name="email" type="email" class="validate" value="<%= data.email %>" required>
+          <label for="email">Email</label>
+        </div>
+      </div>
+      <button style="margin-left: 3rem;" type="submit" class="waves-effect waves-light btn"><i class="material-icons right">send</i>Submit</button>
+      <a href="/students" class="waves-effect waves-light btn right">Show All Students</a>
     </form>
   </div>
 </div>
