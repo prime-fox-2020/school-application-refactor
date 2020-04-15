@@ -9,8 +9,8 @@ class Student {
         this.birth_date = birth_date
     }
 
-    getFullName () {
-        let fullName = this.first_name + ' ' +this.last_name
+    getFullName() {
+        let fullName = this.first_name + ' ' + this.last_name
         return fullName
     }
 
@@ -64,23 +64,17 @@ class Student {
     }
 
     static add(el, cb) {
-        this.validate(el, (err,data) => {
+        this.validate(el, (err, data) => {
             if (Object.values(err).length > 0) {
-                cb(err,null,null)
+                cb(err, null, null)
             } else {
                 pool.query(`INSERT INTO students (first_name, last_name, email, gender, birth_date)
                 VALUES ('${el.first_name}', '${el.last_name}', '${el.email}', '${el.gender}', '${el.birth_date}')`, (err, res) => {
                     if (err) {
-                        cb(err, null, null)
+                        cb(err, null)
                     } else {
-                        this.read((err, data) => {
-                            if (err) {
-                                cb(err, null, null)
-                            } else {
-                                let newStudent = new Student(el.first_name, el.last_name, el.email, el.gender, el.birth_date)
-                                cb(err, data, `${newStudent.getFullName()} success add`)
-                            }
-                        })
+                        let newStudent = new Student(el.first_name, el.last_name, el.email, el.gender, el.birth_date)
+                        cb(null, `${newStudent.getFullName()} success add`)
                     }
                 })
             }
@@ -92,20 +86,14 @@ class Student {
             if (err) {
                 cb(err, null, null)
             } else {
-                this.read((err, data) => {
-                    if (err) {
-                        cb(err, null, null)
-                    } else {
-                        console.log(data);
-                        cb(err, data, `Student with Id : ${id} success deleted`)
-                    }
-                })
+                cb(err, `Student with Id : ${id} success deleted`)
             }
         })
     }
 
     static edit(id, cb) {
-        pool.query(`SELECT * FROM students WHERE id = ${Number(id)}`, (err, res) => {
+        pool.query(`SELECT * FROM students WHERE id = ${Number(id)}`,
+        (err, res) => {
             if (err) {
                 cb(err, null)
             } else {
@@ -115,10 +103,10 @@ class Student {
     }
 
     static update(req, cb) {
-        this.validate(req.body, (err,data) => {
+        this.validate(req.body, (err, data) => {
             console.log('err: ', err);
             if (Object.values(err).length > 0) {
-                cb(err,req.body,null)
+                cb(err, req.body, null)
             } else {
                 pool.query(`UPDATE students
                 SET first_name = '${req.body.first_name}',
@@ -130,14 +118,7 @@ class Student {
                     if (err) {
                         cb(err, null)
                     } else {
-                        this.read((err, data) => {
-                            if (err) {
-                                cb(err, null, null)
-                            } else {
-                                console.log(data);
-                                cb(err, data, `Student with Id : ${req.params.id} success updated!`)
-                            }
-                        })
+                        cb(null, `Student with Id : ${req.params.id} success updated!`)
                     }
                 })
             }

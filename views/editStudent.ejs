@@ -44,7 +44,7 @@
                         <select class="form-control" id="exampleFormControlSelect1" name="gender">
                             <option disabled value="null">-- Choose Gender --</option>
                             <option value="male" <% student.gender == 'male'? 'selected':'' %>>Male</option>
-                            <option value="female" <% student.gender == 'female'? 'selected':'' %>>Female</option>
+                            <option value="female" <%= student.gender == 'female'? 'selected':'' %>>Female</option>
                             <% if (error.gender) { %>
                             <small id="emailHelp" class="form-text text-danger alert-warning p-2"><%= error.gender %>
                             </small>

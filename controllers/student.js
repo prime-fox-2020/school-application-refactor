@@ -7,8 +7,8 @@ class Student {
             if (err) {
                 res.send(err)
             } else {
-                // console.log(data);
-                res.render('students', { students: data, msg: null })
+                const msg = req.query.msg
+                res.render('students', { students: data, msg: msg })
             }
         })
     }
@@ -20,27 +20,22 @@ class Student {
 
     static addPost(req, res) {
         // console.log(req.body);
-        StudentModel.add(req.body, (err, data, msg) => {
+        StudentModel.add(req.body, (err, msg) => {
             if (err) {
-                // res.render(`./students/add?err=${JSON.stringify(err)}`, {error: err})
                 res.render(`addStudent`, { error: err })
             } else {
-                // console.log('data: ', data);
-                // console.log('msg: ', msg);
-                res.render('students', { students: data, msg: msg })
+                console.log('msg: ', msg);
+                res.redirect(`/students?msg=${msg}`)
             }
         })
     }
 
     static delete(req, res) {
-        StudentModel.delete(req.params.id, (err, data, msg) => {
-            console.log(req.params.id);
+        StudentModel.delete(req.params.id, (err, msg) => {
             if (err) {
                 res.send(err)
             } else {
-                // console.log('data: ', data);
-                // console.log('msg: ', msg);
-                res.render('students', { students: data, msg: msg })
+                res.redirect(`/students?msg=${msg}`)
             }
         })
     }
@@ -50,21 +45,21 @@ class Student {
             if (err) {
                 req.send(err)
             } else {
-                // console.log(data);
                 let err = {}
+                console.log(data);
                 res.render('editStudent', { student: data, error: err })
             }
         })
     }
 
     static editPost(req, res) {
-        // console.log(req.body);
-        StudentModel.update(req, (err, data, msg) => {
+        StudentModel.update(req, (err, data) => {
             if (err) {
+                data.id = req.params.id
                 data.birth_date = new Date(data.birth_date);
                 res.render('editStudent', { student: data, error: err })
             } else {
-                res.render('students', { students: data, msg: msg })
+                res.redirect(`/students?msg=${ data }`)
             }
         })
     }
