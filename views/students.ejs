@@ -25,7 +25,8 @@
           <td><%= data.first_name %></td>
           <td><%= data.last_name %></td>
           <td><%= data.email %></td>
-          <td><%= data.birth_date %></td>
+          <% const bd = new Date(data.birth_date) %>
+          <td><%= bd.toDateString() %></td>
           <td>
             <a href="/students/<%= data.id %>/edit" type="button" class="btn btn-primary">Edit</a> | 
             <a href="/students/<%= data.id %>/delete" type="button" class="btn btn-danger">Delete</a>

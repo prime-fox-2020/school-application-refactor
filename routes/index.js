@@ -14,7 +14,7 @@ router.use('/subjects', subjects);
 
 //error
 router.get('/*', (req, res) => {
-  res.render('error');
+  res.render('error', {error: 'Halaman tidak ditemukan'});
 })
 
 module.exports = router;

@@ -22,13 +22,18 @@ class StudentsModel {
     `
     const params = [first_name, last_name, email, birth_date];
 
-    pool.query(query, params, err => {
-      if (err) {
-        callback(err);
-      } else {
-        callback();
-      }
-    })
+    const validation = this.validate(first_name, last_name, email, birth_date);
+    if (validation.length) {
+      callback(validation);
+    } else {
+      pool.query(query, params, err => {
+        if (err) {
+          callback(err);
+        } else {
+          callback();
+        }
+      })
+    }
   }
 
   static editDataGet(callback) {
@@ -46,14 +51,18 @@ class StudentsModel {
     `
 
     const params = [first_name, last_name, email, birth_date, id];
-
-    pool.query(query, params, err => {
-      if (err) {
-        callback(err);
-      } else {
-        callback();
-      }
-    })
+    const validation = this.validate(first_name, last_name, email, birth_date);
+    if (validation.length) {
+      callback(validation);
+    } else {
+      pool.query(query, params, err => {
+        if (err) {
+          callback(err);
+        } else {
+          callback();
+        }
+      })
+    }
   }
 
   static deleteData(id, callback) {
@@ -62,13 +71,70 @@ class StudentsModel {
       WHERE id = $1
     `
 
-    pool.query(query, [id], err => {
+    this.getData((err, res) => {
       if (err) {
         callback(err);
       } else {
-        callback();
+        let flag = true;
+        res.forEach(el => {
+          if (el.id == id) {
+            flag = false;
+            pool.query(query, [id], err => {
+              if (err) {
+                callback(err);
+              } else {
+                callback();
+              }
+            })
+          }
+        })
+        if (flag) {
+          callback([`Data dengan id ${id} tidak ditemukan`]);
+        }
       }
     })
+  }
+
+  static validate(first_name, last_name, email, birth_date) {
+    const emailValid = (
+      email &&
+      email.indexOf('@') > 0 && 
+      email[email.indexOf('@')+1] != '.' && 
+      email.lastIndexOf('.')+2 < email.length &&
+      !email.includes('@', email.indexOf('@')+1) &&
+      !email.includes(' ')
+    )
+
+    const dateValid = (
+      birth_date[2] == '/' &&
+      birth_date[5] == '/' &&
+      birth_date.length == 10 &&
+      Number(birth_date[0]+birth_date[1]) <= 31 &&
+      Number(birth_date[3]+birth_date[4]) <= 12 &&
+      !birth_date.includes(' ')
+    )
+
+    let error = [];
+
+    if (!first_name) {
+      error.push('First Name cannot be empty');
+    }
+    if (!last_name) {
+      error.push('Last Name cannot be empty');
+    }
+    if (!email) {
+      error.push('Email cannot be empty');
+    } else if (!emailValid) {
+      error.push('Invalid Email');
+    }
+    if (!birth_date) {
+      error.push('Birth Date cannot be empty');
+    } else if (!dateValid) {
+      error.push('Invalid Birth Date')
+    }
+
+
+    return error;
   }
 }
 
