@@ -6,7 +6,10 @@
         }
         if (callout.detail) {
             calloutType = 'danger'
-            calloutMessage = `Your email address is not a valid email address`;
+            switch (callout.detail) {
+                case 'invalid_email' : calloutMessage = `Your email address is not a valid email address`; break;
+                case 'invalid_date_format' : calloutMessage = `Date input must in : DD/MM/YYYY Format`
+            }
         }
         if (callout.on) {
             calloutType = 'danger'
