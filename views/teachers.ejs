@@ -1,0 +1,24 @@
+<%- include('partials/header', {title: 'Teachers Page'}) %>
+
+  <div class="container">
+    <h1>Teachers Data</h1>
+    <a href="/" type="button" class="btn btn-secondary">Back to home</a>
+    <br><br>
+    <table class="table table-striped">
+      <tr>
+        <th>Id</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+      </tr>
+      <% data.forEach(dat => { %>
+        <tr>
+          <td><%= dat.id %></td>
+          <td><%= dat.first_name %></td>
+          <td><%= dat.last_name %></td>
+          <td><%= dat.email %></td>
+        </tr>
+      <% }) %>
+    </table>
+  </div>
+<%- include('partials/footer') %>
