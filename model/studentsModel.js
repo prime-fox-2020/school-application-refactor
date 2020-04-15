@@ -4,8 +4,6 @@ class StudentsModel {
 
   static validation(student) {
     let error = []
-    let date = new Date
-    let year = date.getFullYear()
 
     if(!student.first_name) {
       error.push('First Name cannot be empty')
@@ -33,17 +31,31 @@ class StudentsModel {
       error.push('Birth date cannot be empty')
     } else {
       const formatDate = student.birth_date.split('-')
+      let date = new Date
+      let year = date.getFullYear()  
+
       if(formatDate.length !== 3) {
-        error.push('Wrong date format')
+        error.push('Date format should be YYYY-MM-DD')
       } else if(formatDate[1] < 1 || formatDate[1] > 12) {
         error.push('Invalid Month')
-      } else if(formatDate[2] < 1 || formatDate[2] > 31) {
-        error.push('Invalid Date')
-      } else if(formatDate[0] > year) {
+      } else if(Number(formatDate[0]) > year) {
         error.push('Invalid Year')
+      } else if(formatDate[1] == 1 || formatDate[1] == 3 || formatDate[1] == 5 || formatDate[1] == 7 || formatDate[1] == 8 || formatDate[1] == 10 || formatDate[1] == 12) {
+        if(formatDate[2] < 1 ||  formatDate[2] > 31 ) {
+          error.push('Invalid Date')
+        }
+      } else if(formatDate[1] == 4 || formatDate[1] == 6 || formatDate[1] == 9 || formatDate[1] == 11) {
+        if(formatDate[2] < 1 ||  formatDate[2] > 30 ) {
+          error.push('Invalid Date')
+        }
+      }else if(formatDate[1] == 2) {
+        if(formatDate[2] < 1 || formatDate[2] > 29) {
+          error.push('Invalid Date')
+        }
       }
     }
     return error
+  
   }
 
   static getStudents(callback) {
