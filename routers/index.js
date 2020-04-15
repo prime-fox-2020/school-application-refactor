@@ -13,6 +13,7 @@ router.get('/student/add', StudentController.addForm)
 router.post('/student/add', StudentController.add)
 router.get('/student/:id?/edit', StudentController.editForm)
 router.post('/student/:id?/edit', StudentController.edit)
+router.get('/student/:id?/delete', StudentController.delete)
 
 
 module.exports = router

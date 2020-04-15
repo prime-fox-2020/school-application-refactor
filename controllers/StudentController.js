@@ -48,6 +48,16 @@ class StudentController{
             }
         })
     }
+
+    static delete(req, res){
+        StudentModel.delete(Number(req.params.id), (err, data) => {
+            if(err){
+                res.send(err)
+            } else{
+                res.redirect('/student')
+            }
+        })
+    }
 }
 
 module.exports = StudentController
