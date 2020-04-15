@@ -59,7 +59,7 @@ class Model {
                 let check = data.birth_date.split('-');
                 let cond = 0;
                 if (check.length > 1) {
-                    if (check[0].length == 4 && !isNaN(+check[0])) cond++;
+                    if (check[0].length === 4 && !isNaN(+check[0]) && +check[0] < 2016) cond++;
                     if (check[1].length === 2 && !isNaN(+check[1]) && +check[1] < 13) cond++;
                     if (check[2].length === 2 && !isNaN(+check[2]) && +check[2] < 32) cond++;
                 }
