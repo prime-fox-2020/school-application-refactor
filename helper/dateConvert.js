@@ -40,6 +40,46 @@ class DateConvert {
     }
     return `${date[2]}-${bulan}-${date[0]}`;
   }
+  
+  static toIndo(date){
+    date      = date.split(" ")
+    let bulan = "";
+    switch (date[0]) {
+        case "Jan": bulan = "Januari"; break;
+        case "Feb": bulan = "Februari"; break;
+        case "Mar": bulan = "Maret"; break;
+        case "Apr": bulan = "April"; break;
+        case "May": bulan = "Mei"; break;
+        case "Jun": bulan = "Juni"; break;
+        case "Jul": bulan = "Juli"; break;
+        case "Aug": bulan = "Agustus"; break;
+        case "Sep": bulan = "September"; break;
+        case "Oct": bulan = "Oktober"; break;
+        case "Nov": bulan = "November"; break;
+        case "Dec": bulan = "Desember"; break;
+    }
+    return `${date[1]} ${bulan} ${date[2]}`;
+  }
+  
+  static toISOIndo(date){
+    date      = date.split(" ")
+    let bulan = "";
+    switch (date[0]) {
+        case "Jan": bulan = "01"; break;
+        case "Feb": bulan = "02"; break;
+        case "Mar": bulan = "03"; break;
+        case "Apr": bulan = "04"; break;
+        case "May": bulan = "05"; break;
+        case "Jun": bulan = "06"; break;
+        case "Jul": bulan = "07"; break;
+        case "Aug": bulan = "08"; break;
+        case "Sep": bulan = "09"; break;
+        case "Oct": bulan = "10"; break;
+        case "Nov": bulan = "11"; break;
+        case "Dec": bulan = "12"; break;
+    }
+    return `${date[2]}-${bulan}-${date[1]}`;
+  }
 }
 
 module.exports = DateConvert;

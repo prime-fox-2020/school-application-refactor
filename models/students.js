@@ -12,7 +12,7 @@ class StudentsModel{
       if(err) callback(err, null)
       else{
         for(let student of data.rows){
-          student.birth_date = dateConvert.dateToString(student.birth_date.toISOString().slice(0,10))
+          student.birth_date = dateConvert.toIndo(student.birth_date.toString().slice(4,15))
         }
         callback(null, data.rows)
       } 
@@ -24,7 +24,7 @@ class StudentsModel{
     const last_name   = student.last_name
     const email       = student.email
     const gender      = student.gender
-    const birthday    = student.birthday
+    const birthday    = `student.birthday`
     const params = [first_name, last_name, email, gender, birthday]
     const query = `
       INSERT INTO students (first_name, last_name, email, gender, birth_date) VALUES ($1, $2, $3, $4, $5)
@@ -50,7 +50,7 @@ class StudentsModel{
     pool.query(query, params, (err,data) => {
       if(err) callback(err, null)
       else {
-        data.rows[0].birth_date = data.rows[0].birth_date.toISOString().slice(0,10)
+        data.rows[0].birth_date = dateConvert.toISOIndo(data.rows[0].birth_date.toString().slice(4,15))
         callback(null, data.rows[0])
       }
     })
