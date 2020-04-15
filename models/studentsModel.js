@@ -75,9 +75,6 @@ class StudentsModel {
     }
   }
 
-
-
-
   static editGet(paramsId, callback) {
     let query =  `SELECT * FROM students WHERE id = $1`
     let params = [paramsId]
@@ -130,7 +127,7 @@ class StudentsModel {
       }
       date = temp.reverse().join(' ')
       let query = `UPDATE students SET first_name = $2, last_name = $3, email = $4, gender = $5, birth_date = $6 WHERE id = $1`
-      let params = [student.id, student.first_name, student.last_name, student.email, student.gender, student.birth_date]
+      let params = [student.id, student.first_name, student.last_name, student.email, student.gender, date]
       pool.query(query, params, err => {
         if(err) {
           callback(err, null)
