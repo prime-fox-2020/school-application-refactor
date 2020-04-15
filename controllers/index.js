@@ -1,4 +1,5 @@
 const Models = require('../models')
+let lastData = null;
 
 class Render {
     
@@ -6,7 +7,8 @@ class Render {
 
         let pageSelector = request.params.selector;
         let callout = request.query.hasOwnProperty('action') ||
-                      request.query.hasOwnProperty('update')
+                      request.query.hasOwnProperty('update') ||
+                      request.query.hasOwnProperty('status')
                       ? request.query : '';
 
         switch (pageSelector) {
@@ -22,14 +24,15 @@ class Render {
             case 'edit' : {
 
                 Models.findById(page, request.query.id)
-                    .then(result => response.render('new', {form: page, data: result, activeMenu: page, hideAddNewButton: true, callout: callout}))
+                    .then(result => {response.render('new', {form: page, data: lastData ? lastData : result, activeMenu: page, hideAddNewButton: true, callout: callout}); lastData = null;})
                     .catch(err => response.send(err))
 
             }; break;
 
             case 'add' : {
-            
-                response.render('new', {form: page, data: null, activeMenu: page, hideAddNewButton: true, callout: callout})
+
+                response.render('new', {form: page, data: lastData, activeMenu: page, hideAddNewButton: true, callout: callout});
+                lastData = null;
 
             }; break;
 
@@ -64,13 +67,26 @@ class Teachers {
         if (!request.query.hasOwnProperty('id')) {
         
             Models.newData('teachers', request.body)
-                .then(red => response.redirect(302, red))
+                .then(result => {
+                    // set last input by user if we catch an error
+                    if (result.error) {
+                        lastData = result.content;
+                    }
+
+                    response.redirect(302, result.redirect)
+                })
                 .catch(err => response.send(err))
         
         } else {
 
             Models.update('teachers', request.body)
-                .then(red => response.redirect(302, red))
+                .then(result => {
+                    if (result.error) {
+                        lastData = result.content;
+                    }
+
+                    response.redirect(302, result.redirect)
+                })
                 .catch(err => response.send(err))
         }
     }
@@ -90,13 +106,25 @@ class Students {
         if (!request.query.hasOwnProperty('id')) {
 
             Models.newData('students', request.body)
-                .then(red => response.redirect(302, red))
+                .then(result => {
+                    if (result.error) {
+                        lastData = result.content
+                    }
+
+                    response.redirect(302, result.redirect)
+                })
                 .catch(err => response.send(err))
         
         } else {
         
             Models.update('students', request.body)
-                .then(red => response.redirect(302, red))
+                .then(result => {
+                    if (result.error) {
+                        lastData = result.content
+                    }
+
+                    response.redirect(302, result.redirect)
+                })
                 .catch(err => response.send(err))
         
         }
