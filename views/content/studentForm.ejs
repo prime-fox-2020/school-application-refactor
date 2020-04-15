@@ -4,7 +4,8 @@
   let Object = {}, editing = false;
 
   if (data) {
-      Object = data[0], editing = true;
+      Object = Array.isArray(data) ? data[0] : data;
+      editing = Object.hasOwnProperty('id');
   }
   %>
   <%- include('callout/callout.ejs') %>
@@ -14,30 +15,30 @@
     <% } %>
     <div class="form-group">
       <label for="fname">First Name</label>
-      <input type="text" class="form-control" id="fname" name="first_name" placeholder="Student first name.." value="<%= editing == true ? Object.first_name : '' %>">
+      <input type="text" class="form-control" id="fname" name="first_name" placeholder="Student first name.." value="<%= data ? Object.first_name : '' %>">
     </div>
 
     <div class="form-group">
       <label for="lname">Last Name</label>
-      <input type="text" class="form-control" id="lname" name="last_name" placeholder="Student last name.." value="<%= editing == true ? Object.last_name : '' %>">
+      <input type="text" class="form-control" id="lname" name="last_name" placeholder="Student last name.." value="<%= data ? Object.last_name : '' %>">
     </div>
 
     <div class="form-group">
       <label for="lname">Email</label>
-      <input type="text" class="form-control" id="email" name="email" placeholder="Student email.." value="<%= editing == true ? Object.email : '' %>">
+      <input type="text" class="form-control" id="email" name="email" placeholder="Student email.." value="<%= data ? Object.email : '' %>">
     </div>
 
     <div class="form-group">
       <label for="gender">Gender</label>
       <select class="form-control" id="gender" name="gender">
-        <option value="Male" <% if (editing == true && Object.gender.toLowerCase() == 'male') {%>selected<%}%>>Male</option>
-        <option value="Female" <% if (editing == true && Object.gender.toLowerCase() == 'female') {%>selected<%}%>>Female</option>
+        <option value="Male" <% if (data && Object.gender.toLowerCase() == 'male') {%>selected<%}%>>Male</option>
+        <option value="Female" <% if (data && Object.gender.toLowerCase() == 'female') {%>selected<%}%>>Female</option>
       </select>
     </div>
 
     <div class="form-group">
       <label for="lname">Birth Date</label>
-      <input type="text" class="form-control" id="bdate" name="birth_date" placeholder="Student Birth Date (Format : DD/MM/YYYY)" value="<%= editing == true ? Object.birth_date : '' %>">
+      <input type="text" class="form-control" id="bdate" name="birth_date" placeholder="Student Birth Date (Format : DD/MM/YYYY)" value="<%= data ? new Date(Object.birth_date).toLocaleString() : '' %>">
     </div>
 
     <input type="submit" value="Submit" class="btn btn-outline-success">
