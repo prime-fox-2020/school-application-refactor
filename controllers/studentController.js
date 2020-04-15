@@ -25,6 +25,8 @@ class StudentController{
         StudentModel.add_post(req, (err, data) => {
             if(err){
                 let errorMsg = [];
+                let date = req.body.birth_date.split('-');
+
                 if(req.body.first_name === ''){
                     errorMsg.push('First Name is Empty!');
                 }
@@ -39,6 +41,15 @@ class StudentController{
                 }
                 if(req.body.birth_date === ''){
                     errorMsg.push('Birth Date is Empty!');
+                }
+                if(date[2] > 31) {
+                    errorMsg.push("DD isn't more than 31");
+                }
+                if(date[1] > 12){
+                    errorMsg.push("Are u Have month more than 12?");
+                }
+                if(date[0] > 2020 || date[0] < 1900){
+                    errorMsg.push("You can type this if u live in this century!")
                 }
 
                 res.redirect(`/students/add?error=${errorMsg.join(' ')}`);
