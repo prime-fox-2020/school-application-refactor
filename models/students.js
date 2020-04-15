@@ -98,16 +98,23 @@ class StudentsModel{
 
   static validate(student){
     const error = []
+    const date = student.birthday
     if(!student.first_name.length) error.push('First Name Cannot be empty')
     if(!student.last_name.length) error.push('Last Name Cannot be empty')
     if(!student.email.length) error.push('Email Cannot be empty')
     if(!student.gender.length) error.push('Gender Cannot be empty')
     if(!student.birthday.length) error.push('Birth Date Cannot be empty')
     else if(
-      student.birthday[4] !== '-' || student.birthday[7] !== '-' ||
-      Number (student.birthday[5] + student.birthday[6]) > 12 ||
-      Number (student.birthday[8] + student.birthday[9]) > 31 ||
-      student.birthday.length > 10
+      date[4] !== '-' || date[7] !== '-' ||
+      Number (date[5] + date[6]) > 12 ||
+      Number (date[8] + date[9]) > 31 ||
+      date.length > 10 ||
+      !isNaN(`${date[0]}${date[1]}${date[2]}${date[3]}`) ||
+      !isNaN(`${date[5]}${date[6]}`) ||
+      !isNaN(`${date[8]}${date[9]}`) ||
+      Number(`${date[0]}${date[1]}${date[2]}${date[3]}`) > 0 ||
+      Number(`${date[5]}${date[6]}`) > 0 ||
+      Number(`${date[8]}${date[9]}`) > 0
       ) error.push('Date in wrong format')
     
     return error;
