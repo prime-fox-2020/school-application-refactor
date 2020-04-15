@@ -104,13 +104,15 @@ class StudentsModel {
       !email.includes('@', email.indexOf('@')+1) &&
       !email.includes(' ')
     )
-
+    
+    const dateArray = birth_date.split('/');
     const dateValid = (
-      birth_date[2] == '/' &&
-      birth_date[5] == '/' &&
-      birth_date.length == 10 &&
-      Number(birth_date[0]+birth_date[1]) <= 31 &&
-      Number(birth_date[3]+birth_date[4]) <= 12 &&
+      (birth_date[2] == '/' || birth_date[1] == '/') &&
+      (birth_date[5] == '/' || birth_date[4] == '/' || birth_date[3] == '/') &&
+      birth_date.length <= 10 &&
+      Number(dateArray[0]) <= 31 &&
+      Number(dateArray[1]) <= 12 &&
+      dateArray[2].length == 4 &&
       !birth_date.includes(' ')
     )
 
