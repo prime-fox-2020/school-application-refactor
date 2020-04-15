@@ -22,11 +22,33 @@ class StudentsController {
   }
 
   static addPost(req, res) {
-    STM.addStudent(req.body.firstName, req.body.lastName, req.body.gender, req.body.birthdate, (err, data) => {
-      if(err) res.render('error');
+    STM.addStudent(req.body.firstName, req.body.lastName, req.body.email, req.body.gender, req.body.birthdate, (err, data) => {
+      if(err) res.render('error', {error: err});
       else res.redirect('/students');
     })
   }
+
+  static edit(req, res) {
+    STM.getStudentID(Number(req.params.id), (err, data) => {
+      if(err) res.render('error', {error: err})
+      res.render('edit', {data});
+    });
+  }
+
+  static editPost(req, res) {
+    STM.editStudent(req.params.id, req.body.firstName, req.body.lastName, req.body.email, req.body.gender, req.body.birthdate, (err, data) => {
+      if(err) res.render('error', {error: err});
+      else console.log(data); 
+      res.redirect('/students');
+    })
+  }
+
+  static deleteStudentById(req, res) {
+    STM.deleteStudent(req.params.id, (err, data) => {
+    if(err) res.render('error', {error: err})
+    else res.redirect('/students');
+  })
+}
 
 }
 
