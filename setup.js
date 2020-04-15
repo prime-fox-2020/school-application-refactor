@@ -6,7 +6,13 @@ const createStudents = `CREATE TABLE "students"(
   "first_name" VARCHAR (50) NOT NULL,
   "last_name" VARCHAR (50) NOT NULL,
   "email" VARCHAR (50) NOT NULL,
-  "gender" VARCHAR (50)
+  "gender" VARCHAR (50),
+  insertStudents += `('${students[i].first_name}','${students[i].last_name}','${students[i].email}','${students[i].gender}','${students[i].birth_date}');`
+}else{
+  insertStudents += `('${students[i].first_name}','${students[i].last_name}','${students[i].email}','${students[i].gender}','${students[i].birth_date}'),\n`
+}
+}
+  "birth_date" VARCHAR(20)
 );` ;
 
 const createTeachers = `CREATE TABLE "teachers"(

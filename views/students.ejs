@@ -12,6 +12,7 @@
             <th>Last name</th>
             <th>E-mail</th>
             <th>Gender</th>
+            <th>Birth Date</th>
             <th>Action</th>
         </tr>
         <tbody>
@@ -22,6 +23,7 @@
                 <td><%= el.last_name %></td>
                 <td><%= el.email %></td>
                 <td><%= el.gender %></td>
+                <td><%= el.birth_date %></td>
                 <td> 
                     <a href="/student/<%= el.id%>/edit "><button>Edit</button></a>
                     <a href="/student/<%= el.id%>/delete"><button>Delete</button></a>

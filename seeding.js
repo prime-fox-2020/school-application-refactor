@@ -2,14 +2,13 @@ const fs = require ('fs')
 const pool = require('./config/connection.js')
 
 let students = JSON.parse(fs.readFileSync('./data/students.json','utf-8'))
-let insertStudents = `INSERT INTO "students"("first_name","last_name","email","gender")VALUES\n`;
-
+let insertStudents = `INSERT INTO "students"("first_name","last_name","email","gender","birth_date")VALUES\n`;
 
 for(var i = 0 ; i < students.length ; i++){
     if (i == students.length - 1) {
-        insertStudents += `('${students[i].first_name}','${students[i].last_name}','${students[i].email}','${students[i].gender}');`
+        insertStudents += `('${students[i].first_name}','${students[i].last_name}','${students[i].email}','${students[i].gender}','${students[i].birth_date}');`
     }else{
-        insertStudents += `('${students[i].first_name}','${students[i].last_name}','${students[i].email}','${students[i].gender}'),\n`
+        insertStudents += `('${students[i].first_name}','${students[i].last_name}','${students[i].email}','${students[i].gender}','${students[i].birth_date}'),\n`
     }
 }
 

@@ -7,7 +7,6 @@ class Controller {
             if(err){
                 res.send(err)
             }else{
-                console.log(data)
                 res.render("students",{data})
             }
         })
@@ -61,9 +60,9 @@ class Controller {
         console.log(body)
         Students.add(body,(err,data)=>{
             if(err){
-                res.send(err)
+                console.log(err)
+                res.render("studentadd",{err})
             }else{
-                console.log(data)
                 res.redirect('/students')
             }
 

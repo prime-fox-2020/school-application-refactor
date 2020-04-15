@@ -1,12 +1,13 @@
 const pool = require ('../config/connection')
 
 class Student {
-    constructor(id,first_name,last_name,email,gender){
+    constructor(id,first_name,last_name,email,gender,birth_date){
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
         this.gender = gender;
+        this.birth_date = birth_date;
     }
 
     static getTable(cb){
@@ -43,9 +44,15 @@ class Student {
     }   
 
     static change(body, cb){ 
+        let validasi = this.validasi(body)
+
+        if(validasi.length !== 0){
+            cb(null,validasi)
+        }
+
         let changeData = `UPDATE "students" SET first_name = '${body.first_name}', 
         last_name = '${body.last_name}', 
-        email = '${body.email}', gender = '${body.gender}' WHERE id = ${body.id}`
+        email = '${body.email}', gender = '${body.gender}' , birth_date = '${body.birth_date}',WHERE id = ${body.id}`
         
         pool.query(changeData, (err, data) => {
             if(err){
@@ -71,18 +78,24 @@ class Student {
 
 
     static add(body,cb){
-        let insertNewData = `INSERT INTO "students"("first_name","last_name","email","gender")
-        VALUES\n`
-        insertNewData += `('${body.first_name}','${body.last_name}','${body.email}','${body.gender}');`
-        pool.query(insertNewData,(err,data)=>{
-            if(err){
-                cb(err,null)
-            }else{
-                console.log('insertNewData in model done')
-                cb(null,true)
-          }
-      })
+        let validasi = this.validasi(body)
 
+        if(validasi.length !== 0){
+            cb(validasi,null)
+        }else{
+            let insertNewData = `INSERT INTO "students"("first_name","last_name","email","gender","birth_date")
+            VALUES\n`
+            insertNewData += `('${body.first_name}','${body.last_name}','${body.email}','${body.gender}',
+            '${body.birth_date}');`
+            pool.query(insertNewData,(err,data)=>{
+                if(err){
+                    cb(err,null)
+                }else{
+                    console.log('insertNewData in model done')
+                    cb(null,true)
+            }
+            })
+        }
     }
 
     static selectEmail(email,cb){
