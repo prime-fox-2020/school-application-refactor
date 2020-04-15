@@ -6,7 +6,6 @@ class StudentController{
             if(err){
                 res.render('error');
             } else {
-                console.log(req.query)
                 res.render('student', {data, message: req.query.message});
             }
         })
