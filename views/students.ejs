@@ -1,0 +1,41 @@
+<%- include('partials/header', {title: 'Students Page'}) %>
+  
+  
+  <div class="container">
+    <h1>Students Data</h1>
+    <a href="/" type="button" class="btn btn-secondary">Back to home</a>
+    <a href="/students/add" type="button" class="btn btn-primary">Add Students</a>
+    <form class="form-inline my-2 my-lg-0" method="POST" style="float: right;">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search student by email" aria-label="Search" name="search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <br><br>
+    <table class="table table-striped">
+      <tr>
+        <th>Id</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Birth Date</th>
+        <th>Options</th>
+      </tr>
+      <% data.forEach(data => { %>
+        <tr>
+          <td><%= data.id %></td>
+          <td><%= data.first_name %></td>
+          <td><%= data.last_name %></td>
+          <td><%= data.email %></td>
+          <% const bd = new Date(data.birth_date) %>
+          <td><%= bd.toDateString() %></td>
+          <td>
+            <a href="/students/<%= data.id %>/edit" type="button" class="btn btn-primary">Edit</a> | 
+            <a href="/students/<%= data.id %>/delete" type="button" class="btn btn-danger">Delete</a>
+          </td>
+        </tr>
+      <% }) %>
+      <% if (error) { %>
+        <tr><td colspan="6" style="text-align: center;">Data tidak ditemukan</td></tr>
+      <% } %>
+    </table>
+  </div>
+<%- include('partials/footer') %>
