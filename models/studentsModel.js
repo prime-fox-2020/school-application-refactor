@@ -141,8 +141,11 @@ class studentsModels {
         if (!birth) {
             error.push('Date of birth is required')
         } else if (birth[4] != "-" || birth[7] != "-" ||
-            (birth[5] + birth[6]) > 12 || (birth[5] + birth[6]) < 0 ||
-            (birth[8] + birth[9]) > 31 || (birth[8] + birth[9]) < 0) {
+            Number(birth[0] + birth[1] + birth[2] + birth[3]) < 1||
+            Number(birth[5] + birth[6]) > 12 || Number(birth[5] + birth[6]) < 1 ||
+            Number(birth[8] + birth[9]) > 31 || Number(birth[8] + birth[9]) < 1 || 
+            birth.length != 10 || !isNaN(`${birth[0]}${birth[1]}${birth[2]}${birth[3]}`) || 
+            !isNaN(`${birth[5]}${birth[6]}`) || !isNaN(`${birth[8]}${birth[9]}`)) {
             error.push("Wrong Date format")
         }
         return error
