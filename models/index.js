@@ -29,6 +29,14 @@ class Subjects {
     }
 }
 
+class Result {
+    constructor(redirectPage, content, error = false) {
+        this.redirect = redirectPage
+        this.content = content
+        this.error = error
+    }
+}
+
 class Backend {
 
     static executeQuery = query => new Promise((resolve, reject) => {
@@ -48,6 +56,37 @@ class Backend {
 
     })
 
+    static validation = (tableSelection, when, actionType, content) => {
+
+        let Error = '';
+
+        Object.keys(content).forEach(el => {
+
+            if (content[el].trim() == '') {
+
+                Error = new Result(`/${tableSelection}/${when}?${actionType}&status=error&on=${el}`, content, true);
+                return;
+
+            }
+
+            if (el == 'email' && content[el].indexOf('@') == -1) {
+                
+                Error = new Result(`/${tableSelection}/${when}?${actionType}&status=error&detail=invalid_email`, content, true);
+                return;
+
+            }
+
+            if (el == 'birth_date') {
+                if (content[el].indexOf('/') == -1 || Number(content[el].split('/')[1]) > 12) {
+                    Error = new Result(`/${tableSelection}/${when}?${actionType}&status=error&detail=invalid_date_format`, content, true);
+                    return;
+                }
+            }
+        })
+
+        return Error;
+
+    }
 
     static show = (tableSelection) => new Promise((resolve, reject) => {
         let SQL = `SELECT * FROM ${tableSelection} ORDER BY id ASC;`;
@@ -68,25 +107,12 @@ class Backend {
     static newData = (tableSelection, content) => new Promise((resolve, reject) => {
 
         // validate the input
-        let isDataQualified = true, errorMessage = '';
+        const input = this.validation(tableSelection, 'add', 'action=Register', content)
 
-        Object.keys(content).forEach(el => {
-            if (content[el].trim() == '') {
-                errorMessage = `/${tableSelection}/add?action=Register&status=error&on=${el}`;
-                isDataQualified = false;
-                return
-            }
-
-            if (el == 'email' && content[el].indexOf('@') == -1) {
-                errorMessage = `/${tableSelection}/add?action=Register&status=error&detail=invalid_email`;
-                isDataQualified = false;
-            }
-        })
-
-        if (!isDataQualified) {
-            return resolve(errorMessage)
+        if (input.error) {
+            return resolve(input)
         }
-
+        
         const column = () => {
             switch (tableSelection) {
                 case 'teachers' : return Object.keys(new Teachers());
@@ -110,7 +136,7 @@ class Backend {
         }
 
         this.executeQuery(SQL)
-            .then(() => resolve(`/${tableSelection}?action=Register&succeeded=true`))
+            .then(() => resolve(new Result(`/${tableSelection}?action=Register&succeeded=true`, content)))
             .catch(err => reject(err))
 
     })
@@ -128,23 +154,10 @@ class Backend {
     static update = (tableSelection, content) => new Promise((resolve, reject) => {
 
         // validate the input
-        let isDataQualified = true, errorMessage = '';
+        const input = this.validation(tableSelection, 'edit', `id=${content.id}`, content)
 
-        Object.keys(content).forEach(el => {
-            if (content[el].trim() == '') {
-                errorMessage = `/${tableSelection}/update?action=update&status=error&on=${el}`;
-                isDataQualified = false;
-                return
-            }
-
-            if (el == 'email' && content[el].indexOf('@') == -1) {
-                errorMessage = `/${tableSelection}/update?action=update&status=error&detail=invalid_email`;
-                isDataQualified = false;
-            }
-        })
-
-        if (!isDataQualified) {
-            return resolve(errorMessage)
+        if (input.error) {
+            return resolve(input)
         }
 
         const columnToUpdate = () => {
@@ -161,7 +174,7 @@ class Backend {
         let SQL = `UPDATE ${tableSelection} SET ${columnToUpdate()} WHERE id = ${content.id};`;
 
         this.executeQuery(SQL)
-            .then(() => resolve(`/${tableSelection}?action=update&id=${content.id}&succeeded=true`))
+            .then(() => resolve(new Result(`/${tableSelection}?action=update&id=${content.id}&succeeded=true`, content)))
             .catch(err => reject(err))
 
     })
