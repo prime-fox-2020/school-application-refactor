@@ -1,0 +1,20 @@
+    <% if (callout) { 
+        let calloutType = 'success', calloutMessage = '';
+
+        if (!callout.hasOwnProperty('status')) {
+            calloutMessage = `You are successfully ${callout.action} 1 ${activeMenu.substr(0, activeMenu.length-1)}`;
+        }
+        if (callout.detail) {
+            calloutType = 'danger'
+            calloutMessage = `Your email address is not a valid email address`;
+        }
+        if (callout.on) {
+            calloutType = 'danger'
+            calloutMessage = `You must fill all requirement field`
+        }
+        
+    %>
+    <div class="alert alert-<%= calloutType %>" role="alert">
+    <%= calloutMessage %>
+    </div>
+    <% } %>
