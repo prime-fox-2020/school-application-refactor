@@ -10,7 +10,12 @@ class StudentsModel{
     `
     pool.query(query, (err, data) => {
       if(err) callback(err, null)
-      else callback(null, data.rows)
+      else{
+        for(let student of data.rows){
+          student.birth_date = dateConvert.dateToString(student.birth_date.toISOString().slice(0,10))
+        }
+        callback(null, data.rows)
+      } 
     })
   }
 
