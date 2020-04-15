@@ -10,6 +10,38 @@ class StudentModel {
         this.birth_date = birthDate
     }
 
+    static changeToWord(month){
+        switch(month){
+            case '1': month = 'Januari'
+                break;
+            case '2': month = 'Februari'
+                break;
+            case '3': month = 'Maret'
+                break;
+            case '4': month = 'April'
+                break;
+            case '5': month = 'Mei'
+                break;
+            case '6': month = 'Juni'
+                break;
+            case '7': month = 'Juli'
+                break;
+            case '8': month = 'Agustus'
+                break;
+            case '9': month = 'September'
+                break;
+            case '10': month = 'Oktober'
+                break;
+            case '11': month = 'November'
+                break;
+            case '12': month = 'Desember'
+                break;
+            default:
+                break;
+        }
+        return month;
+    }
+
     static getStudents(callback) {
         pool.query(`SELECT * FROM students ORDER BY id ASC`, (err, data) => {
             if(err){
@@ -20,7 +52,11 @@ class StudentModel {
                 let date;
                 for (let i = 0; i < data.rows.length; i++) {
                     date = data.rows[i].birth_date.toLocaleDateString().split('/')
-                    let newDate = date[1] + '-' + date[0] + '-' + date[2]
+                    if(date.length > 1){
+                        date[0] = this.changeToWord(date[0]);
+                        date[2] = date[2];
+                    }
+                    let newDate = date[1] + ' ' + date[0] + ' ' + date[2]
                     result.push(new StudentModel(data.rows[i].id, data.rows[i].first_name, data.rows[i].last_name, data.rows[i].email, data.rows[i].gender, newDate))
                 }
                 callback(null, result)
@@ -105,7 +141,14 @@ class StudentModel {
             if (err) {
                 callback(err, null)
             } else {
-                callback(null, data.rows)
+                let result = []
+                let date;
+                for (let i = 0; i < data.rows.length; i++) {
+                    date = data.rows[i].birth_date.toLocaleDateString().split('/')
+                    let newDate = date[1] + '-' + date[0] + '-' + date[2]
+                    result.push(new StudentModel(data.rows[i].id, data.rows[i].first_name, data.rows[i].last_name, data.rows[i].email, data.rows[i].gender, newDate))
+                }
+                callback(null, result)
             }
         })
     }
@@ -138,7 +181,11 @@ class StudentModel {
                 let date;
                 for (let i = 0; i < data.rows.length; i++) {
                     date = data.rows[i].birth_date.toLocaleDateString().split('/')
-                    let newDate = date[1] + '-' + date[0] + '-' + date[2]
+                    if(date.length > 1){
+                        date[0] = this.changeToWord(date[0]);
+                        date[2] = date[2];
+                    }
+                    let newDate = date[1] + ' ' + date[0] + ' ' + date[2]
                     result.push(new StudentModel(data.rows[i].id, data.rows[i].first_name, data.rows[i].last_name, data.rows[i].email, data.rows[i].gender, newDate))
                 }
                 callback(null, result)

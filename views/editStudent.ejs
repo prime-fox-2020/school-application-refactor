@@ -21,23 +21,27 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">First name</label>
-                    <input type="text" name="firstName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" autofocus value="<%= students[i].first_name %>">
+                    <input type="text" name="firstName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" autofocus placeholder="Enter your first name" value="<%= students[i].first_name %>">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Last name</label>
-                    <input type="text" name="lastName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<%= students[i].last_name %>">
+                    <input type="text" name="lastName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter your last name" value="<%= students[i].last_name %>">
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Email address</label>
                     <input type="email" name="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" value="<%= students[i].email %>">
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Gender</label>
-                    <input type="text" name="gender" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<%= students[i].gender %>">
+                    <label for="exampleFormControlSelect1">Gender</label>
+                    <select class="form-control" id="exampleFormControlSelect1" name="gender">
+                        <option selected disabled>Select Gender</option>
+                        <option value="male" <%= students[i].gender === "male" ? "selected" : "" %>>Male</option>
+                        <option value="female" <%= students[i].gender === "female" ? "selected" : "" %>>Female</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Birth date</label>
-                    <input type="text" name="birthDate" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="<%= students[i].birth_date %>">
+                    <input type="text" name="birthDate" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="MM-DD-YYYY" value="<%= students[i].birth_date %>">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

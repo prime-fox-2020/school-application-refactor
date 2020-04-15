@@ -55,7 +55,7 @@ class ControllerStudents {
         StudentModel.update(Number(req.body.studentId), req.body, (err, data) => {
             if (err) {
                 if(Array.isArray(err)){
-                    res.redirect(`/students/${req.params.studentId}/edit?error=${err.join(', ')}`)
+                    res.redirect(`/students/${req.body.studentId}/edit?error=${err.join(', ')}`)
                 } else {
                     res.render('error',{error:err})
                 }
