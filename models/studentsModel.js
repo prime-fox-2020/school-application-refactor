@@ -145,7 +145,7 @@ class StudentModel {
                 let date;
                 for (let i = 0; i < data.rows.length; i++) {
                     date = data.rows[i].birth_date.toLocaleDateString().split('/')
-                    let newDate = date[1] + '-' + date[0] + '-' + date[2]
+                    let newDate = date[0] + '-' + date[1] + '-' + date[2]
                     result.push(new StudentModel(data.rows[i].id, data.rows[i].first_name, data.rows[i].last_name, data.rows[i].email, data.rows[i].gender, newDate))
                 }
                 callback(null, result)
