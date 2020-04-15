@@ -121,7 +121,10 @@ class StudentsModel{
     const params = [email]
     pool.query(query, params, (err,data) => {
       if(err) callback(err, null)
-      else callback(null, data.rows[0])
+      else {
+        data.rows[0].birth_date = dateConvert.toIndo(data.rows[0].birth_date.toString().slice(4,15))
+        callback(null, data.rows[0])
+      }
     })
   }
 }
