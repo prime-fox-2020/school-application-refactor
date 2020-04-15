@@ -25,25 +25,7 @@ class StudentsModel {
   
   static addPost(data, callback){
     let error = this.validate(data)
-    let date = data.birth_date
-    let temp = date.split('-')
-    for (let i = 0; i < temp.length; i++) temp[i] = Number(temp[i])
-    switch(temp[1]){
-      case 1: temp[1] = 'Januari'; break
-      case 2: temp[1] = 'Februari'; break
-      case 3: temp[1] = 'Maret'; break
-      case 4: temp[1] = 'April'; break
-      case 5: temp[1] = 'Mei'; break
-      case 6: temp[1] = 'Juni'; break
-      case 7: temp[1] = 'Juli'; break
-      case 8: temp[1] = 'Agustus'; break
-      case 9: temp[1] = 'September'; break
-      case 10: temp[1] = 'Oktober'; break
-      case 11: temp[1] = 'November'; break
-      case 12: temp[1] = 'Desember'; break
-      default: ;break
-    }
-    date = temp.reverse().join(' ')
+    let date = this.changeDate(data)
 
     if(error.length > 0){
       callback(error,null)
@@ -75,25 +57,7 @@ class StudentsModel {
 
   static editPost(student, callback) {
     let error = this.validate(student)
-    let date = student.birth_date
-    let temp = date.split('-')
-    for (let i = 0; i < temp.length; i++) temp[i] = Number(temp[i])
-    switch(temp[1]){
-      case 1: temp[1] = 'Januari'; break
-      case 2: temp[1] = 'Februari'; break
-      case 3: temp[1] = 'Maret'; break
-      case 4: temp[1] = 'April'; break
-      case 5: temp[1] = 'Mei'; break
-      case 6: temp[1] = 'Juni'; break
-      case 7: temp[1] = 'Juli'; break
-      case 8: temp[1] = 'Agustus'; break
-      case 9: temp[1] = 'September'; break
-      case 10: temp[1] = 'Oktober'; break
-      case 11: temp[1] = 'November'; break
-      case 12: temp[1] = 'Desember'; break
-      default: ;break
-    }
-    date = temp.reverse().join(' ')
+    let date = this.changeDate(student)
 
     if(error.length > 0){
       callback(error,null)
@@ -138,6 +102,7 @@ class StudentsModel {
 
   static validate(student){
     let error = []
+    
     if(!student.first_name) error.push(`First Name is required`)
     if(!student.last_name) error.push(`Last Name is required`)
     if(!student.email) {
@@ -151,14 +116,41 @@ class StudentsModel {
       let date = student.birth_date
       let temp = date.split('-')
       for (let i = 0; i < temp.length; i++) temp[i] = Number(temp[i])
-  
-      if (temp[0] < 1800||temp[0] > 2020) error.push(`Birth date format should be YYYY-MM-DD`)
-      if (temp[1] < 1||temp[1] > 12) error.push(`Birth date format should be YYYY-MM-DD`)
-      if (temp[2] < 1||temp[2] > 31) error.push(`Birth date format should be YYYY-MM-DD`)
+      
+      if (temp[0] < 1800||temp[0] > 2020) {
+        error.push(`Birth date format should be YYYY-MM-DD`)
+      }else if (temp[1] < 1||temp[1] > 12) {
+        error.push(`Birth date format should be YYYY-MM-DD`)
+      }else if (temp[2] < 1||temp[2] > 31) {
+        error.push(`Birth date format should be YYYY-MM-DD`)
+      } 
     } else {
       error.push(`Birth date format should be YYYY-MM-DD`)
     }
     return error
+  }
+  
+  static changeDate(student){
+    let date = student.birth_date
+    let temp = date.split('-')
+    for (let i = 0; i < temp.length; i++) temp[i] = Number(temp[i])
+    switch(temp[1]){
+      case 1: temp[1] = 'Januari'; break
+      case 2: temp[1] = 'Februari'; break
+      case 3: temp[1] = 'Maret'; break
+      case 4: temp[1] = 'April'; break
+      case 5: temp[1] = 'Mei'; break
+      case 6: temp[1] = 'Juni'; break
+      case 7: temp[1] = 'Juli'; break
+      case 8: temp[1] = 'Agustus'; break
+      case 9: temp[1] = 'September'; break
+      case 10: temp[1] = 'Oktober'; break
+      case 11: temp[1] = 'November'; break
+      case 12: temp[1] = 'Desember'; break
+      default: ;break
+    }
+    date = temp.reverse().join(' ')
+    return date
   }
 
 }

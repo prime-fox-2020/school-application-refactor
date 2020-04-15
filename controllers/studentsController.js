@@ -21,7 +21,7 @@ class StudentsController {
     studentsModel.addPost(req.body, (err, data)=>{
       if (err) {
         if(Array.isArray(err)){
-          res.redirect(`/students/add?error=${err.join(',')}`)
+          res.redirect(`/students/add?error=${err.join(', ')}`)
         }
       } else {
         res.redirect(`/students?message=${data}&type=success`)
@@ -62,7 +62,7 @@ class StudentsController {
     studentsModel.editPost(tempData, (err, data)=>{      
       if (err) {
         if(Array.isArray(err)){
-          res.redirect(`/students/${tempData.id}/edit?error=${err.join(',')}`)
+          res.redirect(`/students/${tempData.id}/edit?error=${err.join(', ')}`)
         }
       } else {
       res.redirect(`/students?message=${data}&type=success`)
