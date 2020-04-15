@@ -8,7 +8,7 @@ const subjectsRouter = require('./subjects-router')
 router.get('/', IndexController.showHome)
 router.use('/students', studentsRouter)
 router.use('/teachers', teachersRouter)
-// router.use('/subjects', subjectsRouter)
+router.use('/subjects', subjectsRouter)
 
 
 module.exports = router

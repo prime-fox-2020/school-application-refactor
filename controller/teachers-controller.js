@@ -47,7 +47,7 @@ class TeachersController {
                 if (err) {
                     res.redirect('/teachers/add?error=Format date salah')
                 } else {
-                    res.redirect(`/teachers?message=berhasil menambahkan student dengan nama ${req.body.first_name} ${req.body.last_name}`)
+                    res.redirect(`/teachers?message=berhasil menambahkan teacher dengan nama ${req.body.first_name} ${req.body.last_name}`)
                 }
             })
         }
@@ -69,7 +69,7 @@ class TeachersController {
             if (err) {
                 res.render('error-views.ejs', {error: err})
             } else {
-                res.redirect(`/teachers?message=berhasil edit student dengan id ${req.params.id}`)
+                res.redirect(`/teachers?message=berhasil edit teacher dengan id ${req.params.id}`)
             }
         })
     }
@@ -79,7 +79,7 @@ class TeachersController {
             if (err) {
                 res.render('error-views.ejs', {error: err})
             } else {
-                res.redirect(`/teachers?message=berhasil menghapus student dengan id ${req.params.id}`)
+                res.redirect(`/teachers?message=berhasil menghapus teacher dengan id ${req.params.id}`)
             }
         })
     }
