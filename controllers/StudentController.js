@@ -29,7 +29,6 @@ class StudentController {
   }
 
   static postAdd(req, res) {
-    console.log(req.body)
     StudentModel.createOne(req.body, (err, data) => {
       if (err) {
         res.render('public/404', { errMsg: err })

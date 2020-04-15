@@ -1,5 +1,4 @@
 const pool = require('../config/connection')
-const DateHelper = require('../utils/DateHelper')
 
 class StudentModel {
   constructor({id = null, first_name, last_name, email, gender, birth_date}) {
@@ -34,7 +33,7 @@ class StudentModel {
   static bodValidation([date, month, year]) {
     let result = ''
     if (typeof date === 'number' && typeof month === 'number' && typeof year === 'number') {
-      if (date < 0 || date > 31 || month < 0 || month > 12 || year < 1900 || new Date(year, 11, 31) > Date.now()) return false
+      if (date < 1 || date > 31 || month < 1 || month > 12 || year < 1900 || new Date(year, 11, 31) > Date.now()) return false
         switch (month) {
           case 1:
           case 3:
@@ -96,8 +95,7 @@ class StudentModel {
   static createOne({first_name, last_name = '', gender, birth_date, email}, callback) {
     const emailValid = email.includes('@sekolah.id')
     birth_date = this.bodValidation(birth_date.split('-').map(el => Number(el)))
-    console.log(birth_date)
-    if (first_name && last_name && gender && email && birth_date && emailValid) {
+    if (first_name && gender && email && birth_date && emailValid) {
       const query = 'INSERT INTO students (first_name, last_name, gender, email, birth_date) VALUES ($1, $2, $3, $4, $5)'
       const params = [first_name, last_name, gender, email, birth_date]
       pool.query(query, params, err => {
@@ -131,8 +129,7 @@ class StudentModel {
     const params = [id, first_name, last_name, gender, email, birth_date]
     const emailValid = email.includes('@sekolah.id')
     birth_date = this.bodValidation(birth_date.split('-').map(el => Number(el)))
-    console.log(birth_date)
-    if (first_name && last_name && gender && email && birth_date && emailValid) {
+    if (first_name && gender && email && birth_date && emailValid) {
       pool.query(query, params, err => {
         if (err) {
           callback(err, null)
