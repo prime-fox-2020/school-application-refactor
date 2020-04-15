@@ -4,6 +4,9 @@
       </nav>
 
     <div class="jumbotron">
+      <% if(error){ %>
+        <p style="color: red;"> <%= error %> </p>
+        <% } %>
         <form action="/students/add" method="POST">
             <div class="form-row">
               <div class="col-md-4 mb-3">

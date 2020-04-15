@@ -18,13 +18,18 @@ class StudentControllers{
     }
 
     static addGet(req,res){
-        res.render(`addStudents.ejs`)
+        const error= req.query.error
+        res.render(`addStudents.ejs`,{error})
     }
 
     static addPost(req,res){
         studentsModel.addPost(req.body,(err,data)=>{
             if(err) {
-                res.render(`notfound.ejs`,{error:err})
+                if(Array.isArray(err)){
+                    res.redirect(`/students/add?error=${err.join(`,`)}`)
+                }else{
+                    res.render(`notfound.ejs`,{error:err})
+                }
             }else{
                 res.redirect(`/students?message=${data}&type=success`)
             }
@@ -46,11 +51,12 @@ class StudentControllers{
     }
 
     static editGet(req,res){
+        const error = req.query.error
         studentsModel.editGet(Number(req.params.id),(err,data)=>{
             if(err){
-                res.render(`notfound`,{error:err})
+                    res.render(`notfound`,{error:err})
             }else{
-                res.render(`editStudents`,{data})
+                res.render(`editStudents`,{data,error})
             }
         })
     }
@@ -66,9 +72,13 @@ class StudentControllers{
             birt_date :req.body.birt_date
         }
 
-        studentsModel.editPost(studentEdit,(err,data)=>{
+        studentsModel.editPost(studentEdit,req.params.id,(err,data)=>{
             if(err){
-                res.render(`notfound`,{error:err})
+                if(Array.isArray(err)){
+                    req.redirect(`/students/${req.params.id}/edit?error=${err.join(`,`)}`)
+                }else{
+                    res.render(`notfound`,{error:err})
+                }
             }else{
                 res.redirect(`/students?message=${data}&type=success`)
             }

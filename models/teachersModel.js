@@ -1,52 +1,36 @@
-const fs = require(`fs`)
+// const fs = require(`fs`)
+const pool = require(`../db/connection`)
 
 
 class TeachersModel{
-    constructor(){
-
+    constructor(id,first_name,last_name,email,gender){
+        this.id=id,
+        this.first_name = first_name,
+        this.last_name = last_name,
+        this.email = email,
+        this.gender = gender
     }
 
     static getTeachers(callback){
-        // baca file .json lempar ke controller
-        this.open((err,data)=>{
-            if(err) callback(err,null)
-            else callback(null,data)
-        })
-    }
+        let query =`SELECT * FROM teachers ORDER BY id`
 
-    static open(callback){
-        fs.readFile(`./teachers.json`,`utf8`,(err,data)=>{
-            if(err) callback(err,null)
-            else 
-            callback(null,JSON.parse(data))
-
-        })
-    }
-
-    static getTeachersId(teachersId,callback){
-
-        this.open((err,data)=>{
+        pool.query(query,(err,data) =>{
             if(err){
                 callback(err,null)
             }else{
-                let teachersListId=[]
-                data.forEach(element => {
-                    if(teachersId == element.id){
-                        teachersListId.push(element)
-                    }
-                })
-                callback(null,teachersListId)
 
-                // this.save(newStudents,(err)=>{
-                //     if(err){
-                //         callback(err,null)
-                //     }else{
-                //         callback(null,`Student dengan Id :${studentId} Berhasil di detele`)
-                //     }
-                // })
+                let intance = []
+
+                for (let i = 0; i < data.rows.length; i++) {
+
+                    intance.push( new TeachersModel (data.rows[i].id,data.rows[i].first_name,data.rows[i].last_name,data.rows[i].email,data.rows[i].gender))
+    
+                }
+
+                callback(null,intance)
             }
-        })
 
+        })
     }
 
 }
