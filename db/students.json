@@ -1,0 +1,135 @@
+[
+  {
+    "id": 1,
+    "first_name": "Joko",
+    "last_name": "Santoso",
+    "email": "jokosantoso@sekolah.id",
+    "gender": "male"
+  },
+  {
+    "id": 2,
+    "first_name": "Lukman",
+    "last_name": "Riki",
+    "email": "lukmanriki@sekolah.id",
+    "gender": "female"
+  },
+  {
+    "id": 3,
+    "first_name": "Siti",
+    "last_name": "Nurhayati",
+    "email": "sitinurhayati@sekolah.id",
+    "gender": "female"
+  },
+  {
+    "id": 4,
+    "first_name": "Rika",
+    "last_name": "Risti",
+    "email": "rikaristi@sekolah.id",
+    "gender": "female"
+  },
+  {
+    "id": 6,
+    "first_name": "Test2wawan",
+    "last_name": "Test2wati",
+    "email": "test2baru@email.com",
+    "gender": "male"
+  },
+  {
+    "id": 7,
+    "first_name": "Reza",
+    "last_name": "Rahardian",
+    "email": "reza@email.com",
+    "gender": "male"
+  },
+  {
+    "id": 8,
+    "first_name": "Reza",
+    "last_name": "Rahardian",
+    "email": "reza@email.com",
+    "gender": "male"
+  },
+  {
+    "id": 9,
+    "first_name": "newww",
+    "last_name": "newww",
+    "email": "new@email.com",
+    "gender": "female"
+  },
+  {
+    "id": 10,
+    "first_name": "Reza",
+    "last_name": "Rahardian",
+    "email": "reza@email.com",
+    "gender": "male"
+  },
+  {
+    "id": 11,
+    "first_name": "new",
+    "last_name": "newati",
+    "email": "new@email.com",
+    "gender": "female"
+  },
+  {
+    "id": 12,
+    "first_name": "new",
+    "last_name": "newati",
+    "email": "new@email.com",
+    "gender": "female"
+  },
+  {
+    "id": 13,
+    "first_name": "new",
+    "last_name": "newati",
+    "email": "new@email.com",
+    "gender": "female"
+  },
+  {
+    "id": 14,
+    "first_name": "new",
+    "last_name": "newati",
+    "email": "new@email.com",
+    "gender": "female"
+  },
+  {
+    "id": 15,
+    "first_name": "new",
+    "last_name": "newati",
+    "email": "new@email.com",
+    "gender": "female"
+  },
+  {
+    "id": 16,
+    "first_name": "new",
+    "last_name": "newati",
+    "email": "new@email.com",
+    "gender": "female"
+  },
+  {
+    "id": 17,
+    "first_name": "newnew",
+    "last_name": "newati",
+    "email": "new@email.com",
+    "gender": "female"
+  },
+  {
+    "id": 18,
+    "first_name": "aaa",
+    "last_name": "bbb",
+    "email": "a@email.com",
+    "gender": "male"
+  },
+  {
+    "id": 19,
+    "first_name": "aaa",
+    "last_name": "bbb",
+    "email": "a@email.com",
+    "gender": "male"
+  },
+  {
+    "id": 20,
+    "first_name": "aaa",
+    "last_name": "bbb",
+    "email": "a@email.com",
+    "gender": "male"
+  }
+]
