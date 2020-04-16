@@ -5,7 +5,11 @@
         <meta name="viewport" content="width=device-width , initial-scale=1.0">
         <title>List Students</title>
     </head>
+
     <body>
+        <% if(error){ %>
+            <div class="alert alert-danger" role="alert">
+        <%= error %>
         <h1>Add Students</h1>
         <%- include('../partials/navbar.ejs') %>
             <div class="alert alert-danger" role="alert">

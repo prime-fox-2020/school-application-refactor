@@ -31,7 +31,7 @@ class Controller {
             if(err){
                 res.send(err)
             }else{
-                res.redirect('/students')
+                res.redirect('/students',{error})
             }
 
         })
@@ -51,7 +51,9 @@ class Controller {
     }
 
     static addForm(req,res){
-        res.render("studentadd")
+        const error= req.query.error
+        console.log(error)
+        res.render("studentadd",{error})
     }
 
 
@@ -61,7 +63,9 @@ class Controller {
         Students.add(body,(err,data)=>{
             if(err){
                 console.log(err)
-                res.render("studentadd",{err})
+                if(Array.isArray(err)) {
+                res.redirect(`/student/addstudent?error=${err.join(',')}`)
+                }
             }else{
                 res.redirect('/students')
             }
