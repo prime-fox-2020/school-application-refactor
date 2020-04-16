@@ -7,14 +7,15 @@
     </head>
 
     <body>
-        <% if(error){ %>
-            <div class="alert alert-danger" role="alert">
-        <%= error %>
+        <% if (error) { %>
+            <p style="color: red;"><%= error %></p>
+          <% } %>
+
         <h1>Add Students</h1>
         <%- include('../partials/navbar.ejs') %>
             <div class="alert alert-danger" role="alert">
             </div>
-            <form action = "/student/addstudent" method="post">
+            <form action = "/student/add" method="post">
             <label for = "">First Name</label>
             <br>
             <input type = "text" name = "first_name">

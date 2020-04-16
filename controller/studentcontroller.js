@@ -64,7 +64,7 @@ class Controller {
             if(err){
                 console.log(err)
                 if(Array.isArray(err)) {
-                res.redirect(`/student/addstudent?error=${err.join(',')}`)
+                res.redirect(`/student/add?error=${err.join(',')}`)
                 }
             }else{
                 res.redirect('/students')
