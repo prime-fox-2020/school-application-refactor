@@ -11,17 +11,16 @@ class studentsModels {
             ORDER BY id ASC
         `
 
-        pool.query(query, (err, results) => {
-            if (err) {
-                callback(err, null)
-            } else {
-                for (let i = 0; i < results.rows.length; i++) {
-                    results.rows[i].birth_date = Convert.toIndo(results.rows[i].birth_date.toString().slice(4, 15))
-                    // console.log(results.rows[i])
-                }
-                callback(null, results.rows)
+        pool
+        .query(query)
+        .then(res => {
+            for (let i = 0; i < res.rows.length; i++) {
+                res.rows[i].birth_date = Convert.toIndo(res.rows[i].birth_date.toString().slice(4, 15))
+                // console.log(res.rows[i])
             }
+            callback(null, res.rows)
         })
+        .catch(err => callback(err, null))
     }
 
     static findStudentByEmail(email, callback) {
@@ -31,17 +30,14 @@ class studentsModels {
         `
         // console.log(email)
         let params = [email]
-        pool.query(query, params, (err, results) => {
-            if (err) {
-                callback(err, null)
-            } else {
-                for (let i = 0; i < results.rows.length; i++) {
-                    results.rows[i].birth_date = Convert.toIndo(results.rows[i].birth_date.toISOString().slice(4, 15))
-                    // console.log(results.rows[i])
-                }
-                callback(null, results.rows)
-            }
+        pool
+        .query(query, params)
+        .then(res => {
+            // console.log(res)
+            res.rows[0].birth_date = Convert.toIndo(res.rows[0].birth_date.toString().slice(4, 15))
+            callback(null, res.rows)
         })
+        .catch(err => callback(err, null))
     }
 
     static postAddStudentsData(req, callback) {
@@ -55,15 +51,11 @@ class studentsModels {
             callback(error, null)
         } else {
             let params = [req.first_name, req.last_name, req.email, req.gender, req.birthdate]
-            pool.query(query, params, (err, results) => {
-                if (err) {
-                    callback(err, null)
-                } else {
-                    callback(null, results.rows)
-                }
-            })
+            pool
+            .query(query, param)
+            .then(res => callback(null, results.rows))
+            .catch(err => callback(err, null))   
         }
-
     }
 
     static editStudentById(id, error, callback) {
@@ -72,23 +64,23 @@ class studentsModels {
         SELECT * FROM students WHERE id = $1
         `
         let params = [id]
-        pool.query(query, params, (err, results) => {
-            if (err) {
-                callback(err, null)
+        pool
+        .query(query, params)
+        .then(res => {
+            res.rows[0].birth_date = Convert.toISOIndo(res.rows[0].birth_date.toString().slice(4, 15))
+            // console.log(res.rows[0])
+            if (error == undefined) {
+                res.rows[0].error = false
+                callback(null, { student: res.rows[0] })
             } else {
-                results.rows[0].birth_date = Convert.toISOIndo(results.rows[0].birth_date.toString().slice(4, 15))
-                // console.log(results.rows[0])
-                if (error == undefined) {
-                    results.rows[0].error = false
-                    callback(null, { student: results.rows[0] })
-                } else {
-                    results.rows[0].error = error
-                    callback(null, { student: results.rows[0] })
-                }
+                res.rows[0].error = error
+                callback(null, { student: res.rows[0] })
             }
         })
-
+        .catch(err => callback(err, null))
+        
     }
+    
 
     static postAfterEdit(req, id, callback) {
         // console.log(id)
@@ -101,13 +93,10 @@ class studentsModels {
             callback(error, null)
         } else {
             let params = [req.first_name, req.last_name, req.email, req.gender, req.birthdate, id]
-            pool.query(query, params, (err, results) => {
-                if (err) {
-                    callback(err, null)
-                } else {
-                    callback(null, results.rows)
-                }
-            })
+            pool
+            .query(query, params)
+            .then(res => callback(null, res.rows))
+            .catch(err => callback(err, null))
         }
     }
 
@@ -117,13 +106,10 @@ class studentsModels {
         `
 
         let params = [id]
-        pool.query(query, params, (err, results) => {
-            if (err) {
-                callback(err, null)
-            } else {
-                callback(null, results.rows)
-            }
-        })
+        pool
+        .query(query, params)
+        .then(res => callback(null, results.rows))
+        .catch(err => callback(err, null))
     }
 
     static validation(req){
@@ -144,8 +130,9 @@ class studentsModels {
             Number(birth[0] + birth[1] + birth[2] + birth[3]) < 1||
             Number(birth[5] + birth[6]) > 12 || Number(birth[5] + birth[6]) < 1 ||
             Number(birth[8] + birth[9]) > 31 || Number(birth[8] + birth[9]) < 1 || 
-            birth.length != 10 || !isNaN(`${birth[0]}${birth[1]}${birth[2]}${birth[3]}`) || 
-            !isNaN(`${birth[5]}${birth[6]}`) || !isNaN(`${birth[8]}${birth[9]}`)) {
+            birth.length != 10 || isNaN(`${birth[0]}${birth[1]}${birth[2]}${birth[3]}`) || 
+            isNaN(`${birth[5]}${birth[6]}`) || isNaN(`${birth[8]}${birth[9]}`)) {
+                console.log(birth)
             error.push("Wrong Date format")
         }
         return error

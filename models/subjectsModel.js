@@ -10,14 +10,13 @@ class subjectsModels {
             ORDER BY id ASC
         `
 
-        pool.query(query, (err, results) => {
-            if (err) {
-                callback(err, null)
-            } else {
-                callback(null, results.rows)
-            }
-        })
+        pool
+        .query(query)
+        .then(res => callback(null, res.rows))
+        .catch(err => callback(err, null))
     }
+    
+    
 
     static findSubjectById(id, callback) {
 
@@ -27,15 +26,12 @@ class subjectsModels {
         `
         // console.log(id)
         let params = [id]
-        pool.query(query, params, (err, results) => {
-            if (err) {
-                callback(err, null)
-            } else {
-                // console.log(results)
-                callback(null, results.rows)
-            }
-        })
+        pool
+        .query(query, params)
+        .then(res => callback(null, res.rows))
+        .catch(err => callback(err, null))
     }
+    
 }
 
 
