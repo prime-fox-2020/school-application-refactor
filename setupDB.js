@@ -7,7 +7,7 @@ pool.query (`
         last_name VARCHAR,
         email VARCHAR,
         gender VARCHAR,
-        birth_date VARCHAR
+        birth_date DATE
     )
     `, (err) => {
         if (err) {
