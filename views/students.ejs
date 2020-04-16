@@ -1,0 +1,46 @@
+<%- include('partial/header') %>
+<body>
+  <div class="container">
+    <div class="row">
+        <div class='col-md-12'>
+          <h1>Students Data</h1>
+          <% if(data.length) { %>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Birth Date</th>
+                        <th colspan="2">Option</th>
+                    </tr>
+            </thead>
+            <tbody>
+                <% data.forEach(element => { %>
+
+                    <tr>
+                        <th scope="row"><%= element.id %></th>
+                        <td><%= element.first_name %>></td>
+                        <td><%= element.last_name %></td>
+                        <td><%= element.email %></td>
+                        <td><%= element.gender %></td>
+                        <td><%= element.birth_date %></td>
+                        <td><a href="/student/<%= element.id%>/edit" role="button">EDIT</a></td>
+                        <td><a href="/student/<%= element.id%>/delete" role="button">DELETE</a></td>
+                    </tr>
+               <% }) %>
+        </tbody>
+    </table>
+    <%}%>
+    <p class="lead">
+        <a class="btn btn-primary btn-lg" href="/" role="button">Go To Home</a>
+      </p>
+        </div>
+    </div>
+  </div>
+
+</body>
+</html>
+
