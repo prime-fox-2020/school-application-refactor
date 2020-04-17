@@ -1,0 +1,23 @@
+  <%- include('partials/head.ejs') %>
+  <body>
+    
+    <h1>Register A Student</h1>
+    
+    <form action="/students/add" method="POST">
+      <label for="first_name">First Name</label><br>
+      <input type="text" id="first_name" name="first_name" minlength="4" autofocus required>
+      <br><br>
+      <label for="last_name">Last Name</label><br>
+      <input type="text" id="last_name" name="last_name" minlength="4" required>
+      <br><br>
+      <label for="email">Email Address</label><br>
+      <input type="text" id="email" name="email" required>
+      <br><br>
+      <label for="gender">Male/Female</label><br>
+      <input type="text" id="gender" name="gender" required>
+      <br><br>
+      <button type="submit">Submit</button>
+    </form>
+
+  </body>
+</html>
