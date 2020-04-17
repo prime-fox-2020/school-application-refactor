@@ -24,7 +24,7 @@ class StudentsModel{
     const last_name   = student.last_name
     const email       = student.email
     const gender      = student.gender
-    const birthday    = `student.birthday`
+    const birthday    = student.birthday
     const params = [first_name, last_name, email, gender, birthday]
     const query = `
       INSERT INTO students (first_name, last_name, email, gender, birth_date) VALUES ($1, $2, $3, $4, $5)
@@ -109,12 +109,12 @@ class StudentsModel{
       Number (date[5] + date[6]) > 12 ||
       Number (date[8] + date[9]) > 31 ||
       date.length > 10 ||
-      !isNaN(`${date[0]}${date[1]}${date[2]}${date[3]}`) ||
-      !isNaN(`${date[5]}${date[6]}`) ||
-      !isNaN(`${date[8]}${date[9]}`) ||
-      Number(`${date[0]}${date[1]}${date[2]}${date[3]}`) > 0 ||
-      Number(`${date[5]}${date[6]}`) > 0 ||
-      Number(`${date[8]}${date[9]}`) > 0
+      isNaN(`${date[0]}${date[1]}${date[2]}${date[3]}`) ||
+      isNaN(`${date[5]}${date[6]}`) ||
+      isNaN(`${date[8]}${date[9]}`) ||
+      Number(`${date[0]}${date[1]}${date[2]}${date[3]}`) < 0 ||
+      Number(`${date[5]}${date[6]}`) < 0 ||
+      Number(`${date[8]}${date[9]}`) < 0
       ) error.push('Date in wrong format')
     
     return error;
