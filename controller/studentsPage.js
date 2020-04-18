@@ -3,7 +3,7 @@ const studentsModel = require('../models/studentsModel')
 
 class StudentsController {
     static getStudentsList (req, res) {
-        studentsModel.getStudents ((err, data) => {
+        studentsModel.read ((err, data) => {
             if (err) {
                 res.send('Students not found')
             }
@@ -18,9 +18,9 @@ class StudentsController {
     }
 
     static postStudent (req, res) {
-        studentsModel.studentPost(req.body, (err, data) => {
+        studentsModel.update(req.body, (err, data) => {
             if (err) {
-                res.send(err)
+                res.send('No new student data found')
             }
             else {
                 res.redirect('/students')
@@ -29,7 +29,7 @@ class StudentsController {
     }
 
     static getEditStudent (req, res) {
-        studentsModel.editStudents(req.params.id, (err, data) => {
+        studentsModel.readEditStudents(req.params.id, (err, data) => {
             if (err) {
                 res.send(err)
             }
@@ -49,7 +49,7 @@ class StudentsController {
         let first_name = req.body.firstname;
         let last_name = req.body.lastname;
         let email = req.body.email;
-        studentsModel.postEditStudents(id, first_name, last_name, email, (err, data) => {
+        studentsModel.updateEditStudents(id, first_name, last_name, email, (err, data) => {
             if (err) {
                 console.log(err)
             }
@@ -60,7 +60,7 @@ class StudentsController {
     }
 
     static deleteStudent (req, res) {
-        studentsModel.deleteStudent(req.params.id, (err, data) => {
+        studentsModel.delete(req.params.id, (err, data) => {
             if (err) {
                 res.send('Unable to delete data')
             }
@@ -71,12 +71,12 @@ class StudentsController {
     }
 
     static getEmail (req, res) {
-        studentsModel.getEmail(req.params.email, (err, data) => {
+        studentsModel.readEmail(req.params.email, (err, data) => {
             if (err) {
                 console.log(err)
             }
             else {
-                res.send(data)
+                res.render('students.ejs', { data })
             }
         })
     }

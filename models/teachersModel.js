@@ -1,18 +1,9 @@
+const fs = require('fs')
 const pool = require('../connection')
 
 class TeachersModel {
-    static getTeachers(callback) {
-        this.openFile((err, data) => {
-            if (err) {
-                callback(err, null)
-            }
-            else {
-                callback(null, data)
-            }
-        })
-    }
 
-    static getTeachersId(req, callback) {
+    static readTeachersId(req, callback) {
         pool.query(`SELECT * FROM teachers WHERE id = '${req}'`, (err, res) => {
             if (err) {
                 callback(err, null)
@@ -24,7 +15,7 @@ class TeachersModel {
     }
 
 
-    static openFile (callback) {
+    static read (callback) {
         pool.query(`SELECT * FROM teachers`, (err, res) => {
             if (err) {
                 callback(err, null)

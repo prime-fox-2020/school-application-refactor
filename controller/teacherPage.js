@@ -2,7 +2,7 @@ const teachersModel = require('../models/teachersModel')
 
 class TeachersController {
     static getTeacherList (req, res) {
-        teachersModel.getTeachers((err, data) => {
+        teachersModel.read((err, data) => {
             if (err) {
                 res.send ('Data not found')
             }
@@ -14,16 +14,12 @@ class TeachersController {
     )}
 
     static getTeachersId (req, res) {
-        teachersModel.getTeachersId(req.params.id, (err, data) => {
+        teachersModel.readTeachersId(req.params.id, (err, data) => {
             if (err) {
                 res.send ('id not found')
             }
             else {
-                res.send(data)
-                // for (let i = 0; i < data.length; i++) {
-                //     if (data[i].id == req.params.id) {
-                //     }
-                // }
+                res.render('teachers.ejs', { data })
             }
         })
     }

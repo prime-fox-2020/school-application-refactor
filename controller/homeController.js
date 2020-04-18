@@ -1,8 +1,6 @@
 class HomeController {
     static getHome(req, res) {
-        const message = 'Sekolah Muara Ilmu merupakan institusi pendidikan formal yang memiliki akreditasi A.\n
-        Sekolah Muara Ilmu menggunakan kurikulum berbasis internasional yang diterapkan di Jepang.\n
-        Dengan tim pengajar yang memiliki spesialisasi pada bidang pengajaran, kami dapat mencetak generasi-generasi cemerlang.'
+        const message = 'Sekolah Muara Ilmu merupakan institusi pendidikan formal yang memiliki akreditasi A.\nSekolah Muara Ilmu menggunakan kurikulum berbasis internasional yang diterapkan di Jepang.\nDengan tim pengajar yang memiliki spesialisasi pada bidang pengajaran, kami dapat mencetak generasi-generasi cemerlang.'
         res.render('home.ejs', {
             message : message
         })
